@@ -1,0 +1,5 @@
+package mypackage;
+
+public abstract class Category {
+abstract double getAmount();
+}

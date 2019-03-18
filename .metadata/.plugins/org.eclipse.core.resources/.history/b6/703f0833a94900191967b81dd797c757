@@ -1,0 +1,20 @@
+package mypackage;
+import java.util.HashMap;
+
+public class Registrar {
+	private static HashMap<String, Object> instances = new HashMap<String, Object>();
+	public static void add(String name, Customer customer) {
+		instances.put(name, customer);
+	}
+
+	public static void add(String name, Movie movie) {
+		instances.put(name, movie);		
+	}
+
+	public static Object get(String string, String name) {
+		return instances.get(name);
+	}
+
+
+
+}

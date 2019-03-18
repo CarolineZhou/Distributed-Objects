@@ -1,0 +1,11 @@
+package mypackage;
+
+public class Regular extends Category {
+
+	
+	double getAmount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

@@ -1,0 +1,34 @@
+
+package mypackage;
+public class Movie {
+    public static final int  CHILDRENS = 2;
+    public static final int  REGULAR = 0;
+    public static final int  NEW_RELEASE = 1;
+
+
+	public int priceCode;
+	public String name;
+
+	public Movie(String name, int priceCode) {
+		this.name = name;
+		this.priceCode = priceCode;
+	}
+
+	public int priceCode() {
+		return this.priceCode;
+	}
+
+	public void persist() {
+		Registrar.add ("Movies", this);
+	}
+
+	public static Movie get(String name) {
+		return (Movie) Registrar.get("Movies", name);
+	}
+
+	public String name() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+}
+

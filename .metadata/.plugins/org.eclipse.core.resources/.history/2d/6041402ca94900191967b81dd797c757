@@ -1,0 +1,41 @@
+import java.io.IOException;
+import java.math.BigInteger;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.output.XMLOutputter;
+
+
+public class FibonacciJDOM {
+
+  public static void main(String[] args) {
+
+    Element root = new Element("Fibonacci_Numbers");
+
+    Integer low  = new Integer(1);
+    Integer high = new Integer(1);
+
+    for (int i = 1; i <= 10; i++) {
+      Element fibonacci = new Element("fibonacci");
+      fibonacci.setAttribute("index", String.valueOf(i));
+      fibonacci.setText(low.toString());
+      root.addContent(fibonacci);
+
+      Integer temp = high;
+      high = high+low;
+      low = temp;
+    }
+
+    Document doc = new Document(root);
+    // serialize it onto System.out
+    try {
+      XMLOutputter serializer = new XMLOutputter();
+      serializer.output(doc, System.out);
+    }
+    catch (IOException e) {
+      System.err.println(e);
+    }
+
+  }
+
+}

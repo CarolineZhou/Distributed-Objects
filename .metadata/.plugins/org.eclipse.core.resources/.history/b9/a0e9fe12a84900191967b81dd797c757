@@ -1,0 +1,139 @@
+import static java.lang.System.out;
+
+import org.jdom2.*;
+import java.lang.reflect.*;
+import java.util.*;
+public class Deserialize {
+	Class clz;
+	Constructor constructor;
+	Object obj;
+	Element root;
+	Element clazz;
+	Method meth;
+	HashMap<Integer,Object> hashMap = new HashMap<Integer,Object>();
+
+	public Deserialize(Document doc) throws NoSuchMethodException, SecurityException {
+
+		root = doc.getRootElement();
+		List<Element> elements = root.getChildren();
+		clazz = elements.get(0);
+		Attribute cl = clazz.getAttribute("Name");
+		String name = clazz.getAttributeValue(cl.getName());
+		try {
+			clz = Class.forName(name);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		listChildren(root,0);
+
+		createInstance(clazz);
+
+		int id = obj.hashCode();
+		hashMap.put(id, obj);
+
+		//For fields
+		if(clz.getMethods().length>0){
+			//inspectMethods();
+		}
+		//For fields
+		if(clz.getFields().length>0){
+
+			//inspectFields();
+		}
+	}
+	public void createInstance(Element el) throws NoSuchMethodException, SecurityException {
+
+		Constructor[] constt = clz.getDeclaredConstructors();
+		Parameter[] params=null;
+		if(clz.getDeclaredConstructors().length>0)
+		{
+			Class[] cArg =null;
+			for(Constructor c : constt) {
+				cArg = new Class[c.getParameterCount()]; 		
+
+				params = c.getParameters();
+				int i=0;
+				for(Parameter p:params) {
+					cArg[i] = p.getType(); 		
+					i++;
+				}
+			}
+			constructor = clz.getDeclaredConstructor(cArg);
+		}
+		else {
+
+			try {			
+				constructor = clz.getDeclaredConstructor();
+			} catch (NoSuchMethodException e) {
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			Object[] args = new Object[constructor.getParameterCount()];
+			
+			for(int i=0; i<constructor.getParameterCount();i++) {
+				
+				Element fld = clazz.getChild(params[i].getName());
+				if(fld.getAttributeValue("Type")=="int") {
+					args[i]=Integer.valueOf(fld.getText());
+				}
+				else
+					args[i] = fld.getText();
+			}
+
+			obj = constructor.newInstance(args[0],args[1]);
+
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			out.println("handle 3 called");
+			e.printStackTrace();
+		}
+
+		invokeMethod();
+
+	}
+
+	public void invokeMethod()
+	{
+		try {
+			meth = clz.getMethod("priceCode");
+
+			meth.setAccessible(true);
+			Object o = meth.invoke(obj);
+			out.format("%s() returned %d", meth.getName(), (int) o);
+
+			// Handle any exceptions thrown by method to be invoked.
+		} catch (InvocationTargetException x) {
+			x.printStackTrace();	
+		} catch (IllegalAccessException x) {
+			x.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void listChildren(Element current, int depth) {
+
+		printSpaces(depth);
+		System.out.println(current.getName());
+		List children = current.getChildren();
+		Iterator iterator = children.iterator();
+		while (iterator.hasNext()) {
+			Element child = (Element) iterator.next();
+			listChildren(child, depth+1);
+		}
+	}
+	private static void printSpaces(int n) {
+
+		for (int i = 0; i < n; i++) {
+			System.out.print(' '); 
+		}
+
+	}
+}

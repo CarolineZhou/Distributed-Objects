@@ -1,0 +1,47 @@
+import org.jdom2.*;
+import org.jdom2.output.XMLOutputter;
+
+import mypackage.Movie;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+
+public class JDOM {
+
+	public static void main(String[] args) throws NoSuchMethodException, SecurityException {
+
+		Serialize serializer = new Serialize();
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream("Movie.xml");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		Movie mv = new Movie("alita", 1);
+		System.out.println(mv.priceCode());
+		
+		Element root = new Element("Objects");
+		
+		serializer.accessClass(mv, root);
+		
+		
+		DocType type = new DocType("Objects");
+		Document doc = new Document(root, type);
+
+		// serialize with two space indents and extra line breaks
+		try {
+			XMLOutputter serializerr = new XMLOutputter();
+			serializerr.output(doc, System.out);				 //or use System.out
+			serializerr.output(doc, fos);				 
+
+		}
+		catch (IOException e) {
+			System.err.println(e);
+		}
+		Deserialize deserializer = new Deserialize(doc);
+
+	}
+
+}
