@@ -1,0 +1,17 @@
+
+public class Library {
+	private Owner owner;
+	private int openedYear;
+	private Book[] books;
+	private float[] donations;
+	
+	public void donationAmountChange(int index, int amount)
+	{
+		if(index < donations.length)
+		{
+			donations[index] = amount;
+		}else {
+			System.out.println("NO SUCH DONATION");
+		}
+	}
+}

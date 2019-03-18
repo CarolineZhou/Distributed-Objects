@@ -1,0 +1,12 @@
+
+public class Library {
+	private Owner owner;
+	private int openedYear;
+	private Book[] books;
+	private float[] donations;
+	
+	public void donationAmountChange(int index, int amount)
+	{
+		
+	}
+}
