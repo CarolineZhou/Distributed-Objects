@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class ObjectCreator {
+	private Scanner input = new Scanner(System.in);
+	
+	public boolean displayObjectSelections(int currentObjectNumber) {
+		int selection = 0;
+		boolean doneWithObject = false;
+		String name;
+		Class classObject;
+		
+		System.out.println("OBJECT #" + currentObjectNumber);
+		if(currentObjectNumber != 1)
+		{
+			System.out.println("Would you like to create another object?");
+		}
+			System.out.print(
+					"Please choose an object\n" +
+					"1) Library Object\n" +
+					"2) Book Object\n" +
+					"3) Owner Object\n" +
+					"Enter the number here please : ");
+			selection = input.nextInt();
+			System.out.println(selection);
+			//input.nextLine(); // to stop input skipping
+			switch(selection) {
+			case 1:
+				System.out.println("This is a Library Object");
+				break;
+			case 2:
+				System.out.println("This is a Book Object");
+				break;
+			case 3:
+				System.out.println("This is a Owner Object");
+				break;
+			default:
+				System.out.println("no such object");
+				return false;
+		}
+		
+		System.out.print("How would you like to name the object?\n"
+				+ "Name: ");
+		name = input.nextLine();
+		System.out.println(name);
+		
+			
+		/*Field fields[] = 
+		// Ask to change fields
+		for(int i = 0; i < )*/
+		
+		
+		return doneWithObject;
+	}
+}
