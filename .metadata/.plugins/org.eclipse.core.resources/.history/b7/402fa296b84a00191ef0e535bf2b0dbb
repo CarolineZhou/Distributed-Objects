@@ -1,0 +1,21 @@
+
+public class Book {
+	private int pages;
+	private int price;
+	private int weight;
+	
+	public void setPages(int n)
+	{
+		pages = n;
+	}
+	
+	public void setPrice(int p)
+	{
+		price = p;
+	}
+	
+	public void setWeight(int w)
+	{
+		weight = w;
+	}
+}

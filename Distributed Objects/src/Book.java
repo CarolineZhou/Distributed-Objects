@@ -1,8 +1,8 @@
 
 public class Book {
-	private int pages;
-	private float price;
-	private float weight;
+	private int pages = 0;
+	private int price = 0;
+	private int weight = 0;
 	
 	public void setPages(int n)
 	{

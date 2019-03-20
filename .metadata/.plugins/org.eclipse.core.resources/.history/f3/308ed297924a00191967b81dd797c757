@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+
+public class Library {
+	private Owner owner;
+	private Book[] books;
+	private float[] donations;
+	private ArrayList<String> employees = new ArrayList<String>();
+	
+	public void donationAmountChange(int index, int amount)
+	{
+		if(index < donations.length)
+		{
+			donations[index] = amount;
+		}else {
+			System.out.println("NO SUCH DONATION");
+		}
+	}
+}

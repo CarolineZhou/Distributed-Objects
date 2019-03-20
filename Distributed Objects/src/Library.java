@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 public class Library {
-	private Owner owner;
-	private Book[] books;
-	private float[] donations;
+	private Owner owner = new Owner();
+	private Book[] books = new Book[10];
+	private int[] donations = new int[10];
 	private ArrayList<String> employees = new ArrayList<String>();
 	
 	public void donationAmountChange(int index, int amount)
@@ -14,5 +14,15 @@ public class Library {
 		}else {
 			System.out.println("NO SUCH DONATION");
 		}
+	}
+	
+	public void setDonation(int index, int amount)
+	{
+		donations[index] = amount;
+	}
+	
+	public int getDonation(int index)
+	{
+		return donations[index];
 	}
 }

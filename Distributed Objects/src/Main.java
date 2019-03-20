@@ -5,7 +5,7 @@ public class Main {
 	{
 		ObjectCreator objectCreator = new ObjectCreator();
 		boolean objectCreationDone = false;
-		int objectNumber = 1;
+		int objectNumber = 0;
 		while(objectCreationDone != true)
 		{	
 			objectCreationDone = objectCreator.displayObjectSelections(objectNumber);
