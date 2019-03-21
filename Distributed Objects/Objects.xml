@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE Deserialized><serialized><object id="1252169911" class="Owner"><field declaringclass="Owner" Name="age"><value>0</value></field></object></serialized>
+<!DOCTYPE Deserialized><serialized><object id="1252169911" class="Book"><field declaringclass="Book" name="pages"><value>0</value></field><field declaringclass="Book" name="price"><value>0</value></field><field declaringclass="Book" name="weight"><value>0</value></field></object></serialized>

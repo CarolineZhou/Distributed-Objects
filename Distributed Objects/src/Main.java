@@ -51,10 +51,15 @@ public class Main {
 			System.err.println(e);
 		}
 		
-		//deserialsize xml file
+		/*//deserialsize xml file
 		Deserializer deserializer = new Deserializer();
 		HashMap<Integer,Object> hashMap = (HashMap<Integer, Object>) deserializer.Deserialize(doc);
-		
+
+
+		// 2. For-each Loop
+		for (Integer key : hashMap.keySet()) {
+			System.out.println(key);
+		}*/
 		
 		
 		

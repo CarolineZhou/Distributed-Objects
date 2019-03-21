@@ -28,7 +28,7 @@ public class Library {
 	
 	public void setEmployees(int index,String name)
 	{
-		employees.add(index, name);;
+		employees.set(index, name);;
 	}
 	
 	public String getEmployees(int index)

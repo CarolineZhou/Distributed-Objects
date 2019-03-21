@@ -1,0 +1,51 @@
+import static org.junit.Assert.*;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.junit.Test;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSSerializer;
+
+public class DistributedObjectsTests {
+
+	@Test
+	public void testRootElement() {
+		ObjectCreator objectCreator = new ObjectCreator();
+		Library lib = new Library();
+		objectCreator.objects[0] = lib;
+		
+		Serializer serializer = new Serializer();
+		Document doc = serializer.serialize(objectCreator);
+		Element root = new Element("serialized");
+		Element test = serializer.getRootElement();
+		
+		assertEquals(root.getName(), test.getName());
+		
+	}
+	
+	@Test
+	public void testBookXML() {
+		ObjectCreator objectCreator = new ObjectCreator();
+		Owner testObj = new Owner();
+		objectCreator.objects[0] = testObj;
+		
+		Serializer serializer = new Serializer();
+		org.w3c.dom.Document doc = (org.w3c.dom.Document) serializer.serialize(objectCreator);
+		String docInfo = getStringFromDoc(doc);
+		String correctInfo = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" + 
+				"<!DOCTYPE Deserialized><serialized><object id=\"1252169911\" class=\"Book\"><field declaringclass=\"Book\" name=\"pages\"><value>0</value></field><field declaringclass=\"Book\" name=\"price\"><value>0</value></field><field declaringclass=\"Book\" name=\"weight\"><value>0</value></field></object></serialized>\r\n" + 
+				"";
+		assertEquals(correctInfo, docInfo);
+		
+	}
+	
+	public String getStringFromDoc(org.w3c.dom.Document doc)    {
+	    DOMImplementationLS domImplementation = (DOMImplementationLS) doc.getImplementation();
+	    LSSerializer lsSerializer = domImplementation.createLSSerializer();
+	    return lsSerializer.writeToString(doc);   
+	}
+	
+	
+	
+
+}

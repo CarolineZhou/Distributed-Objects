@@ -1,0 +1,124 @@
+import static java.lang.System.out;
+
+import org.jdom2.*;
+import java.lang.reflect.*;
+import java.util.*;
+public class Deserializer {
+	private Class currentClass;
+	private Object currentObject;
+	private Element currentRoot;
+	private Element classHolder;
+	private HashMap<Integer,Object> hashMap = new HashMap<Integer,Object>();
+
+	public Object Deserialize(Document doc) throws NoSuchMethodException, SecurityException {
+		Element r = doc.getRootElement();
+		accessClass(r);
+		return hashMap;
+	}
+	
+	public void accessClass(Element root)
+	{
+		currentRoot = root;
+		List<Element> elements = currentRoot.getChildren();
+		
+		//get the class of the object
+		for(int i = 0; i < elements.size(); i++)
+		{
+			classHolder = elements.get(i);
+			Attribute objAttr = classHolder.getAttribute("class");
+			String objAttrName = classHolder.getAttributeValue(objAttr.getName());
+			System.out.println("Attribute: "+ objAttr);
+			System.out.println("Attribute name: " + objAttrName);
+			
+			try {
+				currentClass = Class.forName(objAttrName);
+			} catch(ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			
+			//access class objects
+			listChildren(currentRoot, 0);
+			
+			//create an instance of the class
+			createInstance(classHolder);
+			
+			//get hashcode and put this object in to the hashtable
+			int id = currentObject.hashCode();
+			hashMap.put(id, currentObject);
+			
+			//When there is at least 1 field
+			if(currentClass.getDeclaredFields().length > 0)
+			{
+				inspectFields(elements.get(i));
+			}
+			
+		}
+	}
+	
+	public void createInstance(Element ele)
+	{
+		//if non-array object
+		if(currentClass.isArray() != true)
+		{
+			System.out.println("This is not an array object");
+			try {
+				currentObject = currentClass.newInstance();
+				System.out.println("current object: " + currentObject.toString());
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (currentClass.isArray() == true){
+			System.out.println("This is an array object");
+			Attribute objAttr = classHolder.getAttribute("length");
+			String length = classHolder.getAttributeValue(objAttr.getName());
+			System.out.println("Component Type: " + currentClass.getComponentType()
+								+ "Length: " + length);
+			
+			Class componentType = currentClass.getComponentType();
+			currentObject = Array.newInstance(componentType, Integer.parseInt(length));
+			System.out.println(currentObject);
+			
+		}else {
+			
+		}
+		
+	}
+	
+	private void inspectFields(Element classHolder)
+	{
+		List<Element> fieldElements = classHolder.getChildren();
+		
+		for(Element e : fieldElements)
+		{
+			System.out.println("Field element: " + e.getName());
+			//load the each field
+			
+		}
+		
+	}
+	
+	public static void listChildren(Element current, int depth) {
+
+		printSpaces(depth);
+		System.out.println(current.getName());
+		List children = current.getChildren();
+		Iterator iterator = children.iterator();
+		while (iterator.hasNext()) {
+			Element child = (Element) iterator.next();
+			listChildren(child, depth+1);
+		}
+	}
+	
+	private static void printSpaces(int n) {
+
+		for (int i = 0; i < n; i++) {
+			System.out.print(' '); 
+		}
+
+	}
+	
+}

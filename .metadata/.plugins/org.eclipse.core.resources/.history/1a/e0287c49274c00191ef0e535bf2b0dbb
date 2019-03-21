@@ -1,0 +1,19 @@
+import static org.junit.Assert.*;
+
+import org.jdom2.Document;
+import org.junit.Test;
+
+public class DistributedObjectsTests {
+
+	@Test
+	public void testObjectRoot() {
+		ObjectCreator objectCreator = new ObjectCreator();
+		Library lib = new Library();
+		objectCreator.objects[0] = lib;
+		
+		Serializer serializer = new Serializer();
+		Document doc = serializer.serialize(objectCreator);
+		
+	}
+
+}

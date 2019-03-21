@@ -10,6 +10,7 @@ public class ObjectCreator {
 	private boolean doneWithObject = false;
 	public static Object objects[] = new Object[10];
 	
+	
 	public boolean displayObjectSelections(int currentObjectNumber) {
 		int selection = 0;
 		input = new Scanner(System.in);
@@ -36,23 +37,17 @@ public class ObjectCreator {
 				{
 					object = new Library();
 					classObject = object.getClass();
-					fieldsSelections(object);
-					objects[currentObjectNumber] = new Object();
-					objects[currentObjectNumber] = object;
+					this.accessField(object,currentObjectNumber);
 					currentObjectNumber++;
 				}else if(selection == 2) {
 					object = new Book();
 					classObject = object.getClass();
-					fieldsSelections(object);
-					objects[currentObjectNumber] = new Object();
-					objects[currentObjectNumber] = object;
+					this.accessField(object,currentObjectNumber);
 					currentObjectNumber++;
 				}else if(selection == 3) {
 					object = new Owner();
 					classObject = object.getClass();
-					fieldsSelections(object);
-					objects[currentObjectNumber] = new Object();
-					objects[currentObjectNumber] = object;
+					this.accessField(object,currentObjectNumber);
 					currentObjectNumber++;
 				}else if (selection == 4){
 					doneWithObject = true;
@@ -64,6 +59,13 @@ public class ObjectCreator {
 		input.close();
 		
 		return doneWithObject;
+	}
+	
+	public void accessField(Object object, int currentObjectNumber)
+	{
+		fieldsSelections(object);
+		objects[currentObjectNumber] = new Object();
+		objects[currentObjectNumber] = object;
 	}
 
 	private void fieldsSelections(Object object) {

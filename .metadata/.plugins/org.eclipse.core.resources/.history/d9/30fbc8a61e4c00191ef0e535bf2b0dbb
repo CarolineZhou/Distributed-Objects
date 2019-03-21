@@ -1,0 +1,69 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.jdom2.*;
+import org.jdom2.output.XMLOutputter;
+
+
+public class Main {
+	static FileOutputStream fos = null;
+	
+	public static void main(String[] args) throws  NoSuchMethodException, SecurityException
+	{
+		ObjectCreator objectCreator = new ObjectCreator();
+		boolean objectCreationDone = false;
+		int objectNumber = 0;
+		
+		while(objectCreationDone != true)
+		{	
+			objectCreationDone = objectCreator.displayObjectSelections(objectNumber);
+			if(objectCreationDone) objectNumber++;
+			System.out.println("Done:" + objectCreationDone);
+		}
+		
+		//ONLY FOR TESTING -------------------------
+		for(int i = 0; i < ObjectCreator.objects.length; i++)
+		{
+			if(ObjectCreator.objects[i] == null) break;
+			System.out.println("Object " + i + ObjectCreator.objects[i].toString());
+		}
+		
+		/// pass ObjectCreator to serializer
+		Serializer serializer = new Serializer();
+		Document doc = serializer.serialize(objectCreator);
+
+		
+		try {
+			fos = new FileOutputStream("Objects.xml");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		// serialize with two space indents and extra line breaks
+		try {
+			XMLOutputter serializerr = new XMLOutputter();
+			serializerr.output(doc, System.out);				 //or use System.out
+			serializerr.output(doc, Main.fos);				 
+		}
+		catch (IOException e) {
+			System.err.println(e);
+		}
+		
+		//deserialsize xml file
+		Deserializer deserializer = new Deserializer();
+		HashMap<Integer,Object> hashMap = (HashMap<Integer, Object>) deserializer.Deserialize(doc);
+
+
+		// 2. For-each Loop
+		for (Integer key : hashMap.keySet()) {
+			System.out.println(key);
+		}
+		
+		
+		
+		
+		
+	}
+}

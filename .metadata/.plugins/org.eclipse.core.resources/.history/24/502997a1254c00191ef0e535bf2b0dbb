@@ -1,0 +1,15 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class DistributedObjectsTests {
+
+	@Test
+	public void test() {
+		ObjectCreator objectCreator = new ObjectCreator();
+		objectCreator.objects[i] = new Library();
+		Serializer serializer = new Serializer();
+		
+	}
+
+}

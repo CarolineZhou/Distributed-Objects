@@ -11,7 +11,14 @@ public class Deserializer {
 	private HashMap<Integer,Object> hashMap = new HashMap<Integer,Object>();
 
 	public Object Deserialize(Document doc) throws NoSuchMethodException, SecurityException {
-		currentRoot = doc.getRootElement();
+		Element r = doc.getRootElement();
+		accessClass(r);
+		return hashMap;
+	}
+	
+	public void accessClass(Element root)
+	{
+		currentRoot = root;
 		List<Element> elements = currentRoot.getChildren();
 		
 		//get the class of the object
@@ -29,21 +36,182 @@ public class Deserializer {
 				e.printStackTrace();
 			}
 			
+			//access class objects
 			listChildren(currentRoot, 0);
 			
-			//createInstance(currentClass);
+			//create an instance of the class
+			createInstance(classHolder);
 			
 			//get hashcode and put this object in to the hashtable
 			int id = currentObject.hashCode();
 			hashMap.put(id, currentObject);
 			
-			//When there is a field. 
+			//When there is at least 1 field
+			if(currentClass.getDeclaredFields().length > 0)
+			{
+				inspectFields(elements.get(i));
+			}
 			
 		}
-		return hashMap;
 	}
 	
+	public void createInstance(Element ele)
+	{
+		//if non-array object
+		if(currentClass.isArray() != true)
+		{
+			System.out.println("This is not an array object");
+			try {
+				currentObject = currentClass.newInstance();
+				System.out.println("current object: " + currentObject.toString());
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else if (currentClass.isArray() == true){
+			System.out.println("This is an array object");
+			Attribute objAttr = classHolder.getAttribute("length");
+			String length = classHolder.getAttributeValue(objAttr.getName());
+			System.out.println("Component Type: " + currentClass.getComponentType()
+								+ "Length: " + length);
+			
+			Class componentType = currentClass.getComponentType();
+			currentObject = Array.newInstance(componentType, Integer.parseInt(length));
+			System.out.println(currentObject);
+			
+		}else {
+			
+		}
+		
+	}
 	
+	private void inspectFields(Element classHolder)
+	{
+		System.out.println("***Inspecting fields***");
+		List<Element> fieldElements = classHolder.getChildren();
+		
+		for(Element e : fieldElements)
+		{
+			/*System.out.println("Field element name: " + e.getAttributeValue("name")
+							+ "and declaringClass: " + e.getAttributeValue("declaringClass"));*/
+			
+			//load the each field
+			
+			try {
+				Field f = currentClass.getDeclaredField(e.getAttributeValue("name"));
+				f.setAccessible(true);
+				if(f.getType().isPrimitive())
+				{
+					System.out.println("Inspecting primitive value");
+					f.set(currentObject, Integer.parseInt(e.getChildText("value")));
+					System.out.println("Field: " + f.getName() 
+									+ " value: " + f.get(currentObject));
+				}else if(f.getType().isArray())
+				{
+					System.out.println("Inspecting object array or int array");
+					/*Class previousClass = currentClass;
+					Object previousObject = currentObject;
+					Element previousRoot = currentRoot;
+					Element previousClassHolder = classHolder;
+					HashMap<Integer,Object> previousHashMap = hashMap;
+					
+					
+					List<Element> arrayElements = e.getChildren();
+					Attribute arrAttr = classHolder.getAttribute("class");
+					String objAttrName = classHolder.getAttributeValue(objAttr.getName());
+				
+					Attribute array1 = 
+					for(int i = 0; i < 10; i++)
+					{
+						
+						accessClass()
+					}
+					//if its int[]
+					
+					//else if its Book[]
+					
+					
+					
+					
+					currentClass = previousClass;
+					currentObject = previousObject;
+					currentRoot = previousRoot;
+					classHolder = previousClassHolder;
+					hashMap = previousHashMap;*/
+				}else if(Collection.class.isAssignableFrom(f.getType()))
+				{
+					System.out.println("Inspecting collection");
+					Class previousClass = currentClass;
+					Object previousObject = currentObject;
+					Element previousRoot = currentRoot;
+					Element previousClassHolder = classHolder;
+					HashMap<Integer,Object> previousHashMap = hashMap;
+					
+					/*Attribute collAttr = e.getAttribute("class");
+					System.out
+					String collAttrName = e.getAttributeValue(collAttr.getName());
+					Class claz;
+					try {
+						claz = Class.forName(collAttrName);
+						System.out.println("Collectionn Name: " + collAttrName);
+						Object obj = claz.newInstance();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (InstantiationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					*/
+					
+					currentClass = previousClass;
+					currentObject = previousObject;
+					currentRoot = previousRoot;
+					classHolder = previousClassHolder;
+					hashMap = previousHashMap;
+				}else {
+					
+					Class previousClass = currentClass;
+					Object previousObject = currentObject;
+					Element previousRoot = currentRoot;
+					Element previousClassHolder = classHolder;
+					HashMap<Integer,Object> previousHashMap = hashMap;
+					
+					System.out.println("Inspecting object field");
+					Attribute a = e.getAttribute("name");
+					String name = e.getAttributeValue(a.getName());
+					
+			
+					accessClass(e);
+		
+					
+					currentClass = previousClass;
+					currentObject = previousObject;
+					currentRoot = previousRoot;
+					classHolder = previousClassHolder;
+					hashMap = previousHashMap;
+				}
+				
+			} catch (NoSuchFieldException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalArgumentException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+		
+	}
 	
 	public static void listChildren(Element current, int depth) {
 
