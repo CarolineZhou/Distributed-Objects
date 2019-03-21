@@ -4,6 +4,11 @@ public class Book {
 	private int price = 0;
 	private int weight = 0;
 	
+	public Book(){
+		pages = 0;
+		price = 0;
+		weight = 0;
+	}
 	public void setPages(int n)
 	{
 		pages = n;
@@ -17,5 +22,10 @@ public class Book {
 	public void setWeight(int w)
 	{
 		weight = w;
+	}
+
+	public int getPages()
+	{
+		return pages;
 	}
 }

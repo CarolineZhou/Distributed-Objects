@@ -1,0 +1,54 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.jdom2.*;
+import org.jdom2.output.XMLOutputter;
+
+
+public class Main {
+	static FileOutputStream fos = null;
+	
+	public static void main(String[] args) throws  NoSuchMethodException, SecurityException
+	{
+		ObjectCreator objectCreator = new ObjectCreator();
+		boolean objectCreationDone = false;
+		int objectNumber = 0;
+		
+		while(objectCreationDone != true)
+		{	
+			objectCreationDone = objectCreator.displayObjectSelections(objectNumber);
+			if(objectCreationDone) objectNumber++;
+			System.out.println("Done:" + objectCreationDone);
+		}
+		
+		//ONLY FOR TESTING -------------------------
+		for(int i = 0; i < ObjectCreator.objects.length; i++)
+		{
+			if(ObjectCreator.objects[i] == null) break;
+			System.out.println("Object " + i + ObjectCreator.objects[i].toString());
+		}
+		
+		/// pass ObjectCreator to serializer
+		Serializer serializer = new Serializer();
+		doc = serializer.serialize(objectCreator);
+
+		
+		try {
+			fos = new FileOutputStream("Objects.xml");
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		
+		serializer.serialize(objectCreator);
+		
+		//Deserialize deserializer = new Deserialize(doc);
+		
+		
+		
+		
+		
+		
+	}
+}

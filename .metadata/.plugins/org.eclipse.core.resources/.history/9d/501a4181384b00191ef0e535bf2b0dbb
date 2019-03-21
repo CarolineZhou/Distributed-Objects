@@ -1,0 +1,10 @@
+import org.jdom2.*;
+
+public class Serializer {
+	
+	public org.jdom.Document serialize(Object obj)
+	{
+		
+	}
+
+}

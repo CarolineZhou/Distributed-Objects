@@ -1,0 +1,52 @@
+import org.jdom2.*;
+import org.jdom2.output.XMLOutputter;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+
+public class Serializer {
+	Class currentClass;
+	Object currentObject;
+	Element currentRoot;
+	
+	
+	// SERIALIZE object passed in, and produce an XML
+	public Document serialize(Object objectCreator)
+	{
+		Element root = new Element("Desesialized");
+		
+		//Create root element first
+		for(int i = 0; i < ObjectCreator.objects.length; i++)
+		{
+			if(ObjectCreator.objects[i] == null) break;
+			currentClass = ObjectCreator.objects[i].getClass();
+			this.accessClass(ObjectCreator.objects[i], root);
+			currentRoot = root;
+		}
+		//then create object one by one
+		
+		
+		DocType type = new DocType("Deserialized");
+		Document doc = new Document(root, type);
+
+		// serialize with two space indents and extra line breaks
+		try {
+			XMLOutputter serializerr = new XMLOutputter();
+			serializerr.output(doc, System.out);				 //or use System.out
+			serializerr.output(doc, Main.fos);				 
+		}
+		catch (IOException e) {
+			System.err.println(e);
+		}
+		return null;
+	}
+	
+	private void accessClass(Object obj, Element root)
+	{
+		
+		
+	}
+
+}
