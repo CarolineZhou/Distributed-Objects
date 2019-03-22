@@ -1,6 +1,10 @@
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 
 import org.jdom2.*;
@@ -40,26 +44,34 @@ public class Main {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+		
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
 		// serialize with two space indents and extra line breaks
 		try {
 			XMLOutputter serializerr = new XMLOutputter();
 			serializerr.output(doc, System.out);				 //or use System.out
-			serializerr.output(doc, Main.fos);				 
+			serializerr.output(doc, Main.fos);
+			serializerr.output(doc, stream);				 
 		}
 		catch (IOException e) {
 			System.err.println(e);
 		}
 		
-		/*//deserialsize xml file
-		Deserializer deserializer = new Deserializer();
-		HashMap<Integer,Object> hashMap = (HashMap<Integer, Object>) deserializer.Deserialize(doc);
-
-
-		// 2. For-each Loop
-		for (Integer key : hashMap.keySet()) {
-			System.out.println(key);
-		}*/
+		String xmlString = new String(stream.toByteArray(), Charset.forName("UTF-8"));
+		
+		EchoClient client = new EchoClient();
+		try 
+		{
+			client.startConnection("127.0.0.1", 4444);
+			client.sendMessage(xmlString);
+			client.sendMessage( "transfer ended 4545" );
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
 		
 		
 		

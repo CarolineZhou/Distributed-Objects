@@ -23,6 +23,23 @@ public class DistributedObjectsTests {
 		
 	}
 	
+	@Test
+	public void testClassHolderElement() {
+		ObjectCreator objectCreator = new ObjectCreator();
+		Library lib = new Library();
+		objectCreator.objects[0] = lib;
+		
+		Serializer serializer = new Serializer();
+		Document doc = serializer.serialize(objectCreator);
+		Element root = new Element("object");
+		Element test = serializer.getClassHolder();
+		
+		assertEquals(root.getName(), test.getName());
+		
+	}
+	
+	
+	
 	/*@Test
 	public void testBookXML() {
 		ObjectCreator objectCreator = new ObjectCreator();

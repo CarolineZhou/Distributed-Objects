@@ -147,7 +147,7 @@ public class Serializer {
 		{
 			//System.out.println("Integer array");
 			Element arrayElement;
-			fieldElement.addContent(arrayElement = new Element("object").setAttribute("length", "10").setAttribute("id", String.valueOf(id))
+			previousRootElement.addContent(arrayElement = new Element("object").setAttribute("length", "10").setAttribute("id", String.valueOf(id))
 					.setAttribute("class", f.getType().getName()));
 			for(int i = 0; i < 10; i++)
 			{
@@ -161,10 +161,10 @@ public class Serializer {
 			//System.out.println("Book Object array");
 			for(int i = 0; i<10;i++)
 			{
-				this.accessClass(((Library) previousObject).getBook(i), fieldElement);
+				this.accessClass(((Library) previousObject).getBook(i), previousRootElement);
 			}
 		}
-		previousClassHolder.addContent(fieldElement);
+		
 		// retrive previous class info
 		currentClass = previousClass;
 		currentObject = previousObject;
@@ -244,7 +244,7 @@ public class Serializer {
 		//System.out.println("Field is object!");
 		fieldElement.setAttribute("declaringClass", f.getDeclaringClass().getName());
 		fieldElement.setAttribute("name", f.getName());
-		fieldElement.addContent(new Element("reference").setAttribute("id", String.valueOf(id)));
+		fieldElement.addContent(new Element("reference").addContent(String.valueOf(id)));
 		this.accessClass(obj, fieldElement);
 		previousClassHolder.addContent(fieldElement);
 		
@@ -254,7 +254,13 @@ public class Serializer {
 		currentRoot = previousRoot;
 		classHolder = previousClassHolder;
 	}
+	
 	public Element getRootElement() {
 			return rootElement;
+	}
+	
+	public Element getClassHolder()
+	{
+		return classHolder;
 	}
 }

@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="WorkbenchPreferenceDialogSettings">
-		<item value="632" key="DIALOG_X_ORIGIN"/>
+		<item value="499" key="DIALOG_X_ORIGIN"/>
 		<item value="132" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="-1" key="dialogHeight"/>
-		<item value="-1" key="dialogWidth"/>
+		<item value="250" key="dialogHeight"/>
+		<item value="350" key="dialogWidth"/>
 		<list key="textEntries">
+			<item value="1"/>
+			<item value="1"/>
+			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.ui.console.ConsoleView"/>
+			<item value="org.eclipse.ui.file.export(exportWizardId=org.eclipse.jdt.internal.ui.jarpackager.JarPackageWizard)"/>
+			<item value="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.jdt.ui.preferences.UserLibraryPreferencePage)"/>
 		</list>
 		<list key="orderedProviders">
+			<item value="org.eclipse.e4.ui.parts"/>
+			<item value="org.eclipse.ui.commands"/>
+			<item value="org.eclipse.ui.commands"/>
 		</list>
 		<list key="textArray">
+			<item value="consol"/>
+			<item value="jar"/>
+			<item value="librar"/>
 		</list>
 	</section>
 	<section name="ImportExportAction">
+		<item value="org.eclipse.ui.wizards.import.FileSystem" key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
 	</section>
 	<section name="ZipFileImportWizard">
+	</section>
+	<section name="FileSystemImportWizard">
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
+		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
+		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="C:\Users\Caroline\Desktop\SCHOOL\THIRD YEAR\Winter\CPSC 501\Assignment2\ReflectiveObjectInspector\src"/>
+			<item value="C:\Users\Caroline\Desktop\SCHOOL\THIRD YEAR\Winter\CPSC 501\Assignment2\ReflectiveObjectInspector\src\a2"/>
+			<item value="C:\Users\Caroline\Desktop\SCHOOL\THIRD YEAR\Winter\CPSC 501\Assignment3\Distributed Objects\Distributed Objects\src"/>
+			<item value="C:\Users\Caroline\Desktop\SCHOOL\THIRD YEAR\Winter\CPSC 501\Assignment3\socket\socket"/>
+		</list>
 	</section>
 </section>
